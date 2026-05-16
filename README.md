@@ -53,4 +53,15 @@ REST API for a blog application built with Spring Boot 4 and Spring Security 6.
 | GET | `/api/private/hello` | Private endpoint | Yes |
 | GET | `/api/admin/hello` | Admin only | Yes + ADMIN role |
 
+## API Documentation
+
+Interactive API documentation (Swagger UI) is available at:
+http://localhost:8080/swagger-ui.html
+
+To test protected endpoints:
+1. Use `/api/auth/login` to get a JWT token
+2. Click **Authorize** button at the top right
+3. Paste the token (without "Bearer" prefix)
+4. All subsequent requests will include the token automatically
+
 ## Project Structure
