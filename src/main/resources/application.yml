@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: blog-api
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/blogdb
+    username: bloguser
+    password: blogpass
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+server:
+  port: 8080
+
+jwt:
+  secret: A1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3X4Y5Z6a7b8c9d0e1f2
+  expiration: 86400000
