@@ -1,12 +1,13 @@
 package org.example.blogapi.post;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.example.blogapi.post.dto.PostRequest;
 import org.example.blogapi.post.dto.PostResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,6 +25,16 @@ public class PostController {
     @GetMapping("/{id}")
     public ResponseEntity<PostResponse> getById(@PathVariable Long id){
         return ResponseEntity.ok(postService.getById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<PostResponse> create(
+            @Valid @RequestBody PostRequest request,
+            Authentication authentication
+    ){
+        String username = authentication.getName();
+        PostResponse response = postService.create(request, username);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 
