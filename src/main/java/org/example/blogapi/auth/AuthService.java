@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.blogapi.auth.dto.AuthResponse;
 import org.example.blogapi.auth.dto.LoginRequest;
 import org.example.blogapi.auth.dto.RegisterRequest;
+import org.example.blogapi.exception.ResourceAlreadyExistsException;
 import org.example.blogapi.security.JwtService;
 import org.example.blogapi.user.CustomUserDetailsService;
 import org.example.blogapi.user.Role;
@@ -30,7 +31,7 @@ public class AuthService {
 
     public AuthResponse register(RegisterRequest request) {
         userRepository.findByUsername(request.getUsername()).ifPresent(user -> {
-            throw new RuntimeException("Username already exists");
+            throw new ResourceAlreadyExistsException("Username already exists");
         });
 
         User user = User.builder()
