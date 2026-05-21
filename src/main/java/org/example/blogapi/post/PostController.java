@@ -37,5 +37,29 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id, Authentication authentication){
+        String username = authentication.getName();
+
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+        postService.delete(id, username, isAdmin);
+        return ResponseEntity.noContent().build();
+
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PostResponse> update(
+            @PathVariable Long id,
+            @Valid @RequestBody PostRequest request,
+            Authentication authentication
+    ){
+        String username = authentication.getName();
+
+        PostResponse postResponse = postService.update(id, request, username);
+        return ResponseEntity.ok(postResponse);
+    }
+
+
 
 }
