@@ -4,6 +4,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.blogapi.post.dto.PostRequest;
 import org.example.blogapi.post.dto.PostResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -18,8 +22,11 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping()
-    public ResponseEntity<List<PostResponse>> getAll(){
-        return ResponseEntity.ok(postService.getAll());
+    public ResponseEntity<Page<PostResponse>> getAll
+            (@PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC)
+              Pageable pageable
+            ){
+        return ResponseEntity.ok(postService.getAll(pageable));
     }
 
     @GetMapping("/{id}")

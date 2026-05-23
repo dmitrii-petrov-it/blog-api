@@ -8,6 +8,8 @@ import org.example.blogapi.post.dto.PostResponse;
 import org.example.blogapi.user.Role;
 import org.example.blogapi.user.User;
 import org.example.blogapi.user.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +23,9 @@ public class PostService {
     private final PostMapper postMapper;
     private final UserRepository userRepository;
 
-    public List<PostResponse> getAll(){
-       return postRepository.findAll()
-                .stream()
-                .map(postMapper::toResponse)
-                .toList();
+    public Page<PostResponse> getAll(Pageable pageable){
+       return postRepository.findAll(pageable)
+                .map(postMapper::toResponse);
 
 
     }
