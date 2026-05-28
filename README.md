@@ -268,23 +268,6 @@ Run the tests with:
 ```bash
 ./mvnw test
 ```
-
----
-
-## Screenshots
-
-### Swagger UI
-
-> _Add a screenshot of the Swagger UI here._
-
-![Swagger UI](docs/screenshots/swagger-ui.png)
-
-### Authorize with JWT
-
-> _Add a screenshot of the Swagger "Authorize" dialog here._
-
-![Swagger Authorize](docs/screenshots/swagger-authorize.png)
-
 ---
 
 ## License
