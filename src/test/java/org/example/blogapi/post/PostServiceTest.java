@@ -230,4 +230,21 @@ class PostServiceTest {
         verify(postRepository, never()).save(any());
     }
 
+    @Test
+    @DisplayName("delete should succeed when user is author")
+    void delete_shouldSucceed_whenUserIsAuthor() {
+        when(postRepository.findById(10L)).thenReturn(Optional.of(testPost));
+        postService.delete(10L, "petr", false);  // petr — автор
+        verify(postRepository).delete(testPost);
+    }
+
+    @Test
+    @DisplayName("delete should throw AccessDeniedException when not author and not admin")
+    void delete_shouldThrowAccessDenied_whenNotAuthorAndNotAdmin() {
+        when(postRepository.findById(10L)).thenReturn(Optional.of(testPost));
+        assertThrows(AccessDeniedException.class,
+                () -> postService.delete(10L, "ivan", false));  // ivan не автор, не админ
+        verify(postRepository, never()).delete(any());
+    }
+
 }
